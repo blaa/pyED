@@ -1,0 +1,38 @@
+/* Generic classes */
+.center {
+    text-align: center;
+}
+
+/* Generic tables */
+
+
+table td, table th {
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    padding: 3px;
+}
+
+table th {
+    border-color: white;
+    font-weight: bold;
+    padding: 4px;
+}
+
+
+table th {
+    background-color: black;
+    color: white;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table tr.row_odd {
+    background-color: lightgray;
+}
+
+
+
+

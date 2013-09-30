@@ -1,0 +1,342 @@
+## -*- coding: utf-8 -*-
+<%inherit file="/base.html"/>
+<%page expression_filter="h" />
+
+<ul class="basic">
+  <li>Name: ${ basic['name'] }</li>
+  <li>Discipline: ${ basic['discipline'] }</li>
+  <li>Circle: ${ basic['circle'] }</li>
+  <li>Race: ${ basic['race'] }</li>
+  <li>Age: ${ basic['age'] }</li>
+  <li>Hair: ${ basic['hair'] }</li>
+  <li>Eyes: ${ basic['eyes'] }</li>
+  <li>Gender: ${ basic['gender'] }</li>
+</ul>
+
+<h2>Attributes</h2>
+<table class="attributes">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Value</th>
+      <th>Step</th>
+      <th>Dice</th>
+    </tr>
+  </thead>
+
+  <tbody class="center">
+    % for atr in attribute_names:
+    <tr>
+      <td>
+        ${ atr }
+      </td>
+      <td>
+        ${ attribute_values[atr] }
+      </td>
+      <td>
+        ${ attribute_steps[atr] }
+      </td>
+      <td>
+        ${ c.get_dice(atr) }
+      </td>
+
+    </tr>
+    % endfor
+  </tbody>
+</table>
+
+<h2>Karma</h2>
+<table>
+<tr>
+  <th>Dice</th>
+  <th>Max</th>
+  <th>Current</th>
+  <th>Step</th>
+  <th>Cost</th>
+  <th>Comment</th>
+</tr>
+<tr>
+  <td>${ karma['dice'] }</td>
+  <td>${ karma['max'] }</td>
+  <td>${ karma['current'] }</td>
+  <td>${ karma['step'] }</td>
+  <td>${ karma['cost'] }</td>
+  <td>${ karma['comment'] }</td>
+</tr>
+</table>
+
+<h2>Defense</h2>
+<table>
+<tr>
+  <th>Physical</th>
+  <th>Spell</th>
+  <th>Social</th>
+  <th>Comment</th>
+</tr>
+<tr>
+  <td>${ defense['physical'] }</td>
+  <td>${ defense['spell'] }</td>
+  <td>${ defense['social'] }</td>
+  <td>${ defense['comment'] or '--' }</td>
+</tr>
+</table>
+
+
+<h2>Armor stats</h2>
+<table>
+<tr>
+  <th>Mystic</th>
+  <th>Physical</th>
+  <th>Comment</th>
+</tr>
+<tr>
+  <td>${ armor_stat['mystic'] }</td>
+  <td>${ armor_stat['physical'] }</td>
+  <td>${ armor_stat['comment'] or '--' }</td>
+</tr>
+</table>
+
+
+<h2>Health</h2>
+<table>
+<tr>
+  <th>Tests</th>
+  <th>Wound limit</th>
+  <th>Consciousness limit</th>
+  <th>Life limit</th>
+  <th>Comment</th>
+</tr>
+<tr>
+  <td>${ health['health_tests'] }</td>
+  <td>${ health['wound'] }</td>
+  <td>${ health['consciousness'] }</td>
+  <td>${ health['life'] }</td>
+  <td>${ health['comment'] or '--' }</td>
+</tr>
+
+</table>
+
+
+
+
+
+<h2>Talents</h2>
+<table class="talents">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Rank</th>
+      <th>Attribute</th>
+      <th>Step</th>
+      <th>Dice</th>
+      <th>Disc/Action/Karma</th>
+      <th>Damage</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+
+  <tbody class="center">
+    % for talent in talents:
+    <tr>
+      <td>
+        ${ talent['name'] }
+      </td>
+      <td>
+        ${ talent['rank'] }
+      </td>
+
+      % if talent['attribute']:
+      <td>
+        ${ talent['attribute'] } (${ c.get_step(talent['attribute']) })
+      </td>
+      <td>
+        ${ c.get_talent_step(talent) }
+      </td>
+      <td>
+        ${ c.get_talent_dice(talent) }
+      </td>
+      % else:
+      <td> </td>
+      <td> </td>
+      <td> </td>   
+      % endif
+
+      <td>
+        % if talent['disciplinary']:
+        D
+        % endif
+
+        % if talent['action']:
+        A
+        % endif
+
+        % if talent['karma']:
+        K
+        % endif
+
+      </td>
+      
+      <td>
+        ${ talent['damage'] }
+      </td>
+
+      <td>
+        ${ talent['comment'] or '' }
+      </td>
+
+    </tr>
+    % endfor
+  </tbody>
+</table>
+
+
+
+<h2>Talent extensions</h2>
+<table class="talent_extensions">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+
+  <tbody class="center">
+    % for ext in talent_extensions:
+    <tr>
+      <td>
+        ${ ext['name'] }
+      </td>
+      <td>
+        ${ ext['comment'] or '' }
+      </td>
+
+    % endfor
+  </tbody>
+</table>
+
+
+<h2>Skills</h2>
+<table class="skills">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Level</th>
+    </tr>
+  </thead>
+
+  <tbody class="center">
+    % for sk in skills:
+    <tr>
+      <td>
+        ${ sk[0] }
+      </td>
+      <td>
+        ${ sk[1] or '--' }
+      </td>
+    % endfor
+  </tbody>
+</table>
+
+
+
+<h2>Items</h2>
+<table class="items">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    % for item in items:
+    <tr>
+      <td>
+        ${ item['name'] }
+      </td>
+      <td>
+        ${ item['comment'] or '' }
+      </td>
+
+    % endfor
+  </tbody>
+</table>
+
+
+<h2>Weapons</h2>
+<table class="weapons">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Damage</th>
+      <th>Talent</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    % for item in weapons:
+    <tr>
+      <td>
+        ${ item['name'] }
+      </td>
+      <td>
+        ${ item['damage_step'] } / ${ step_to_dice(item['damage_step']) }
+      </td>
+      <td>
+        <%
+           print "HERE"
+           code = item['talent_code']
+           talent = c.get_talent(code)
+           print "HERE2"
+        %>
+        ${ talent['name'] }, ${c.get_step(code)} /
+        ${c.get_dice(code)}
+      </td>
+      <td>
+        ${ item['comment'] or '' }
+      </td>
+
+    % endfor
+  </tbody>
+</table>
+
+<h2>Armors</h2>
+<table class="armors">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Physical mod. / Final</th>
+      <th>Mystic mod. / Final</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    % for item in armors:
+    <tr>
+      <td>
+        ${ item['name'] }
+      </td>
+      <td>
+        ${ item['physical_mod'] } / ${ armor_stat['physical'] + item['physical_mod'] }
+      </td>
+      <td>
+        ${ item['mystic_mod'] } / ${ armor_stat['mystic'] + item['mystic_mod'] }
+      </td>
+      <td>
+        ${ item['comment'] or '' }
+      </td>
+
+    % endfor
+  </tbody>
+</table>
+
+
+<h2>Comments</h2>
+
+<ul>
+% for comment in comments:
+  <li>${ comment }</li>
+% endfor
+</ul>

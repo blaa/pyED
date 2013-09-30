@@ -1,0 +1,60 @@
+## -*- coding: utf-8 -*-
+<%inherit file="/base.html"/>
+<%page expression_filter="h" />
+
+<%
+def rowclass(i):
+    if i % 2 == 1:
+        return 'row_odd'
+    return 'row_even'
+%>
+
+<table class="spellbook">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Name</th>
+      <th>Circle</th>
+      <th>Threads</th>
+      <th>Weaving</th>
+      <th>Casting</th>
+      <th>Effect</th>
+      <th>Range</th>
+      <th>Duration</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    % for i, spell in enumerate(spells):
+    <tr class="${ rowclass(i) }">
+      <td class="center">${ i + 1 }</td>
+      <td>${ spell.name }</td>
+      <td class="center">${ spell.circle }</td>
+      <td class="center">${ spell.threads }</td>
+      <td class="center">${ spell.weaving }</td>
+      <td class="center">${ spell.casting }</td>
+      <td>${ spell.effect }</td>
+      <td class="center">${ spell.range }</td>
+      <td class="center">${ spell.duration }</td>
+      <td class="center">${ spell.comment }</td>
+    </tr>
+    % endfor
+
+    % for i in range(5):
+    <tr class="${ rowclass(i) }">
+      <td></td>
+      <td>&nbsp;</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    % endfor
+
+  </tbody>
+</table>
